@@ -76,10 +76,29 @@ public class Problem1
 		{
 			if (str.charAt(i) == '.')
 			{
-				return 0;
+				if (endPosition == strLength)
+				{
+					endPosition = i;
+				}
+				else
+					return 0;
 			}
-			endPosition = i;
 		}
+		
+		int num = 0;
+		
+		for (int i = startPosition; i < endPosition; i++)
+		{
+			char ch = str.charAt(i);
+			int arrayIndex = charIsNum(ch);
+			if (ch == '.')
+				return num * sign;
+			else if (arrayIndex == -1)
+				return 0;
+			else
+				num += NUMS[i] * Math.pow(10, endPosition - i - 1);
+		}
+		return num * sign;
 	}
 	
 	public static int charIsNum(char ch)
@@ -87,7 +106,9 @@ public class Problem1
 		for (int i = 0; i < CHAR_NUMS.length; i++)
 		{
 			if (ch == CHAR_NUMS[i])
-				return i;
+			{
+				return i;				
+			}
 		}
 		return -1;
 	}
@@ -97,15 +118,15 @@ public class Problem1
 		int leadingIndex = 0;
 		int trailingIndex = str.length();
 		
-		for (; leadingIndex < trailingIndex; leadingIndex++)
+		for (int i = trailingIndex; i < trailingIndex; i++)
 		{
-			char currChar = str.charAt(leadingIndex);
+			char currChar = str.charAt(i);
 			if (currChar != ' ')
 				break;
-			leadingIndex = leadingIndex + 1;
+			leadingIndex = i + 1;
 		}
 		
-		for (trailingIndex--; trailingIndex >= 0; trailingIndex--)
+		for (int i = trailingIndex - 1; i >= 0; i--)
 		{
 			char currChar = str.charAt(leadingIndex);
 			if (currChar != ' ')
@@ -118,7 +139,7 @@ public class Problem1
 		{
 			newString += str.charAt(i);
 		}
+		System.out.print(newString);
 		return newString;
 	}
-
 }
