@@ -24,21 +24,34 @@ public class Problem1
 {
 	public static void main(String[] args) 
 	{
-		String str = "123";
+		String str = "32123";
 		String str1 = "123a";
 		String str2 = "1.0";
 		String str3 = "1.0.";
 		String str4 = "-321";
 		String str5 = "+312";
-		String str6 = " 123";		
+		String str6 = " 123";
+		String str7 = "--300.0";
+		String str8 = "123";
 		
-		System.out.printf("%s, Returned %d\n", str, stringToInt(str));
-		System.out.printf("%s, Returned %d\n", str1, stringToInt(str1));
-		System.out.printf("%s, Returned %d\n", str2, stringToInt(str2));
-		System.out.printf("%s, Returned %d\n", str3, stringToInt(str3));
-		System.out.printf("%s, Returned %d\n", str4, stringToInt(str4));
-		System.out.printf("%s, Returned %d\n", str5, stringToInt(str5));
-		System.out.printf("%s, Returned %d\n", str6, stringToInt(str6));
+		System.out.printf("%s, Returned %d - Should Return %d\n",
+							str, stringToInt(str), Integer.parseInt(str));
+		System.out.printf("%s, Returned %d - Should Fail (return 0)\n",
+				str1, stringToInt(str1));
+		System.out.printf("%s, Returned %d - Should Return %d\n",
+				str2, stringToInt(str2), 1);
+		System.out.printf("%s, Returned %d - Should Fail (return 0)\n",
+				str3, stringToInt(str3));
+		System.out.printf("%s, Returned %d - Should Return %d\n",
+				str4, stringToInt(str4), Integer.parseInt(str4));
+		System.out.printf("%s, Returned %d - Should Return %d\n",
+				str5, stringToInt(str5), Integer.parseInt(str5));
+		System.out.printf("%s, Returned %d - Should Return %d\n",
+				str6, stringToInt(str6), 123);
+		System.out.printf("%s, Returned %d - Should Fail (return 0)\n",
+				str7, stringToInt(str7));
+		System.out.printf("%s, Returned %d - Should Return %d\n",
+				str8, stringToInt(str8), Integer.parseInt(str8));
 	}
 	
 	public static final int[] NUMS = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
@@ -96,7 +109,7 @@ public class Problem1
 			else if (arrayIndex == -1)
 				return 0;
 			else
-				num += NUMS[i] * Math.pow(10, endPosition - i - 1);
+				num += NUMS[arrayIndex] * Math.pow(10, endPosition - i - 1);
 		}
 		return num * sign;
 	}
@@ -139,7 +152,6 @@ public class Problem1
 		{
 			newString += str.charAt(i);
 		}
-		System.out.print(newString);
 		return newString;
 	}
 }
