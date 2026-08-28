@@ -19,139 +19,118 @@ package assignOne;
  *  can be used are String.length(), String.charAt(), and String.equals().
  *  You cannot use any of the other classes or methods for this problem.
  */
-
 public class Problem1 
 {
-	public static void main(String[] args) 
+    public static final String[] TEST_CASES = {
+        " 952413",
+        "-321",
+        "+321",
+        "  0123 ",
+        "123 ",
+        "2147483647", // 2^31 - 1
+		"-2147483647", // -2^31 - 1
+        "123a",
+        "1.0",
+        "-",
+        "--300",
+		"2147483648", // 2^31
+		"2147483649", // 2^31 + 1
+		"-2147483648", // -2^31
+		"-2147483649", // -2^31 + 1
+    };
+    public static final int[] EXPECTED_RESULTS = {
+        952413,
+        -321,
+        321,
+        123,
+        123,
+        2147483647,
+		-2147483647,
+        0,
+		0,
+		0,
+		0,
+        0,
+        0,
+        0,
+		0
+    };
+
+    public static void main(String[] args) 
 	{
-		String str = "32123";
-		String str1 = "123a";
-		String str2 = "1.0";
-		String str3 = "1.0.";
-		String str4 = "-321";
-		String str5 = "+312";
-		String str6 = " 123";
-		String str7 = "--300.0";
-		String str8 = "123";
-		
-		System.out.printf("%s, Returned %d - Should Return %d\n",
-							str, stringToInt(str), Integer.parseInt(str));
-		System.out.printf("%s, Returned %d - Should Fail (return 0)\n",
-				str1, stringToInt(str1));
-		System.out.printf("%s, Returned %d - Should Return %d\n",
-				str2, stringToInt(str2), 1);
-		System.out.printf("%s, Returned %d - Should Fail (return 0)\n",
-				str3, stringToInt(str3));
-		System.out.printf("%s, Returned %d - Should Return %d\n",
-				str4, stringToInt(str4), Integer.parseInt(str4));
-		System.out.printf("%s, Returned %d - Should Return %d\n",
-				str5, stringToInt(str5), Integer.parseInt(str5));
-		System.out.printf("%s, Returned %d - Should Return %d\n",
-				str6, stringToInt(str6), 123);
-		System.out.printf("%s, Returned %d - Should Fail (return 0)\n",
-				str7, stringToInt(str7));
-		System.out.printf("%s, Returned %d - Should Return %d\n",
-				str8, stringToInt(str8), Integer.parseInt(str8));
-	}
-	
-	public static final int[] NUMS = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-	public static final char[] CHAR_NUMS = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-	public static int stringToInt(String str) 
-	{
-		str = removeWhiteSpace(str);
-		int strLength = str.length();
-		int sign = 1;
-		int startPosition = 0;
-		
-		for (int i = 0; i < strLength; i++)
+        for (int i = 0; i < TEST_CASES.length; i++) 
 		{
-			char ch = str.charAt(i);
-			if (ch == '+' || ch == '-')
-			{
-				if (ch == '-' && startPosition == 0)
-				{
-					sign = -1;
-					startPosition = i + 1;
-				}
-				else
-				{
-					if (startPosition != 0)
-					{
-						return 0;
-					}
-					startPosition = i + 1;
-				}
-			}
-		}
-		
-		int endPosition = strLength;
-		for (int i = startPosition; i < strLength; i++)
-		{
-			if (str.charAt(i) == '.')
-			{
-				if (endPosition == strLength)
-				{
-					endPosition = i;
-				}
-				else
-					return 0;
-			}
-		}
-		
-		int num = 0;
-		
-		for (int i = startPosition; i < endPosition; i++)
-		{
-			char ch = str.charAt(i);
-			int arrayIndex = charIsNum(ch);
-			if (ch == '.')
-				return num * sign;
-			else if (arrayIndex == -1)
-				return 0;
+            String str = TEST_CASES[i];
+			int result = stringToInt(str);
+			int expectedResult = EXPECTED_RESULTS[i];
+			if (result == expectedResult)
+	            System.out.printf("PASS:    '%s' returned %d\n", str, result, expectedResult);
 			else
-				num += NUMS[arrayIndex] * Math.pow(10, endPosition - i - 1);
-		}
-		return num * sign;
-	}
-	
-	public static int charIsNum(char ch)
+	            System.out.printf("FAILURE: '%s', returned %d - should have been %d\n", str, result, expectedResult);
+        }
+    }
+
+    public static int stringToInt(String str) 
 	{
-		for (int i = 0; i < CHAR_NUMS.length; i++)
+        str = trim(str);
+
+        int sign = 1;
+        int start = 0;
+        char firstCh = str.charAt(0);
+        if (firstCh == '-')
 		{
-			if (ch == CHAR_NUMS[i])
+            start += 1;
+            sign = -1;
+        }
+		else if (firstCh == '+') 
+		{
+            start += 1;
+        }
+
+        int num = 0;
+        boolean overflow = false;
+		int strLength = str.length();
+        for (; start <= strLength - 1; start++) 
+		{
+            char ch = str.charAt(start);
+            if (ch >= '0' && ch <= '9') 
 			{
-				return i;				
-			}
-		}
-		return -1;
-	}
-	
-	public static String removeWhiteSpace(String str)
+                int digit = ch - '0';
+                num = num * 10 + digit;
+				
+                if (num < 0)
+                    overflow = true;
+            }
+			else 
+			{
+                num = 0;
+                break;
+            }
+        }
+
+        if (overflow) 
+		{
+            num = 0;
+        }
+
+        return (int)num * sign;
+    }
+
+    public static String trim(String str)
 	{
-		int leadingIndex = 0;
-		int trailingIndex = str.length();
-		
-		for (int i = trailingIndex; i < trailingIndex; i++)
+		int strLength = str.length();
+
+        int start = 0;
+        for (; start < strLength && str.charAt(start) == ' '; start++) { }
+
+        int end = strLength - 1;
+        for (; end >= start && str.charAt(end) == ' '; end--) { }
+
+        String result = "";
+        for (int i = start; i <= end; i++)
 		{
-			char currChar = str.charAt(i);
-			if (currChar != ' ')
-				break;
-			leadingIndex = i + 1;
-		}
-		
-		for (int i = trailingIndex - 1; i >= 0; i--)
-		{
-			char currChar = str.charAt(leadingIndex);
-			if (currChar != ' ')
-				break;			
-		}
-		
-		String newString = "";
-		
-		for (int i = leadingIndex; i < trailingIndex; i++)
-		{
-			newString += str.charAt(i);
-		}
-		return newString;
-	}
+            result += str.charAt(i);
+        }
+        return result;
+    }
 }
