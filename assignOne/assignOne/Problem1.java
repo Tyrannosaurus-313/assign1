@@ -1,24 +1,5 @@
 package assignOne;
 
-/*
- * Write the code to implement the stringToInt() method. This method should
- *  parse the string argument as a signed decimal integer. The characters in
- *  the string must all be decimal digits, except that the first character
- *  may be an ASCII minus sign '-' to indicate a negative value or an ASCII
- *  plus sign '+' to indicate a positive value. The resulting integer value
- *  is returned.
- *  
- * public static int stringToInt(String str)
- * Parameters:
- *  str - a String containing the int representation to be parsed
- * Returns:
- *  The integer value represented by the argument in decimal.
- *   
- * This method should perform the same as the Integer.parseInt() method in
- *  the Java library. For this problem, the only Java classes/methods that
- *  can be used are String.length(), String.charAt(), and String.equals().
- *  You cannot use any of the other classes or methods for this problem.
- */
 public class Problem1 
 {
     public static final String[] TEST_CASES = {
@@ -98,7 +79,7 @@ public class Problem1
                 int digit = ch - '0';
                 num = num * 10 + digit;
 				
-                if (num < 0)
+                if (num < 0) //less than 0 due to an int overflow
                     overflow = true;
             }
 			else 
@@ -113,7 +94,7 @@ public class Problem1
             num = 0;
         }
 
-        return (int)num * sign;
+        return num * sign;
     }
 
     public static String trim(String str)
