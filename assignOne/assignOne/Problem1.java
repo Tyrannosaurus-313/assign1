@@ -70,13 +70,15 @@ public class Problem1
 
         int num = 0;
         boolean overflow = false;
-		int strLength = str.length();
-        for (; start <= strLength - 1; start++) 
+		int end = str.length() - 1;
+		int digit = 0;
+		char ch = ' ';
+        for (; start <= end; start++) 
 		{
-            char ch = str.charAt(start);
+            ch = str.charAt(start);
             if (ch >= '0' && ch <= '9') 
 			{
-                int digit = ch - '0';
+                digit = ch - '0';
                 num = num * 10 + digit;
 				
                 if (num < 0) //less than 0 due to an int overflow
@@ -100,11 +102,11 @@ public class Problem1
     public static String trim(String str)
 	{
 		int strLength = str.length();
+		int start = 0;
+		int end = strLength - 1;
 
-        int start = 0;
         for (; start < strLength && str.charAt(start) == ' '; start++) { }
 
-        int end = strLength - 1;
         for (; end >= start && str.charAt(end) == ' '; end--) { }
 
         String result = "";

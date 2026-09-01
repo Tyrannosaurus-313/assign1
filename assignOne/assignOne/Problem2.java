@@ -28,7 +28,7 @@ public class Problem2
 	public static void main(String[] args) 
 	{
 		int value = -12345;
-		System.out.printf("Inputed %d Returned \"%s\"", value, intToString(value));
+		System.out.printf("Inputed %d Returned \"%s\"\n", value, intToString(value));
 
 		for (int i = 0; i < TEST_CASES.length; i++) 
 		{
@@ -36,21 +36,25 @@ public class Problem2
 			String result = intToString(str);
 			String expectedResult = EXPECTED_RESULTS[i];
 			if (result.equals(expectedResult))
-				System.out.printf("PASS:    '%d' returned %s\n", str, result, expectedResult);
+				System.out.printf("PASS:    '%d' returned \"%s\"\n", str, result, expectedResult);
 			else
-				System.out.printf("FAILURE: '%d', returned %s - should have been %s\n", str, result, expectedResult);
+				System.out.printf("FAILURE: '%d', returned \"%s\" - should have been %\"s\"\n", str, result, expectedResult);
 		}
 	}
 	
 	public static String intToString(int value) 
 	{
+		if (value == 0)
+			return "0";
+		
         char[] result = new char[11];
 		int position = 0;
 		int remainder = Math.abs(value);
+		int modulus = 0;
 			
 		for (; position < 11 && remainder > 0; position++)
 		{
-			int modulus = remainder % 10;
+			modulus = remainder % 10;
 			result[10 - position] = (char)('0' + modulus);
 			remainder /= 10;
 		}
