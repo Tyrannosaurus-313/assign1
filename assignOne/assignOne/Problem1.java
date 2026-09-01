@@ -1,7 +1,6 @@
 package assignOne;
 
-public class Problem1 
-{
+public class Problem1 {
     public static final String[] TEST_CASES = {
         " 952413",
         "-321",
@@ -37,10 +36,8 @@ public class Problem1
 		0
     };
 
-    public static void main(String[] args) 
-	{
-        for (int i = 0; i < TEST_CASES.length; i++) 
-		{
+    public static void main(String[] args) {
+    	for (int i = 0; i < TEST_CASES.length; i++) {
             String str = TEST_CASES[i];
 			int result = stringToInt(str);
 			int expectedResult = EXPECTED_RESULTS[i];
@@ -51,20 +48,17 @@ public class Problem1
         }
     }
 
-    public static int stringToInt(String str) 
-	{
+    public static int stringToInt(String str) {
         str = trim(str);
 
         int sign = 1;
         int start = 0;
         char firstCh = str.charAt(0);
-        if (firstCh == '-')
-		{
+        if (firstCh == '-') {
             start += 1;
             sign = -1;
         }
-		else if (firstCh == '+') 
-		{
+		else if (firstCh == '+') {
             start += 1;
         }
 
@@ -73,34 +67,29 @@ public class Problem1
 		int end = str.length() - 1;
 		int digit = 0;
 		char ch = ' ';
-        for (; start <= end; start++) 
-		{
+        for (; start <= end; start++) {
             ch = str.charAt(start);
-            if (ch >= '0' && ch <= '9') 
-			{
+            if (ch >= '0' && ch <= '9') {
                 digit = ch - '0';
                 num = num * 10 + digit;
 				
                 if (num < 0) //less than 0 due to an int overflow
                     overflow = true;
             }
-			else 
-			{
+			else {
                 num = 0;
                 break;
             }
         }
 
-        if (overflow) 
-		{
+        if (overflow) {
             num = 0;
         }
 
         return num * sign;
     }
 
-    public static String trim(String str)
-	{
+    public static String trim(String str) {
 		int strLength = str.length();
 		int start = 0;
 		int end = strLength - 1;
@@ -110,8 +99,7 @@ public class Problem1
         for (; end >= start && str.charAt(end) == ' '; end--) { }
 
         String result = "";
-        for (int i = start; i <= end; i++)
-		{
+        for (int i = start; i <= end; i++) {
             result += str.charAt(i);
         }
         return result;

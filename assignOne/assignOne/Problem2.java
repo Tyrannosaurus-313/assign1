@@ -1,7 +1,6 @@
 package assignOne;
 
-public class Problem2 
-{	
+public class Problem2 {	
     public static final int[] TEST_CASES = {
         0,
         952413,
@@ -22,16 +21,14 @@ public class Problem2
         "-321",
         "321",
         "2147483647", // 2^31 - 1
-		"-2147483647", // -2^31 - 1
+		"-2147483647", // -2^31 + 1
     };
 
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 		int value = -12345;
 		System.out.printf("Inputed %d Returned \"%s\"\n", value, intToString(value));
-
-		for (int i = 0; i < TEST_CASES.length; i++) 
-		{
+		
+		for (int i = 0; i < TEST_CASES.length; i++) {
             int str = TEST_CASES[i];
 			String result = intToString(str);
 			String expectedResult = EXPECTED_RESULTS[i];
@@ -42,8 +39,7 @@ public class Problem2
 		}
 	}
 	
-	public static String intToString(int value) 
-	{
+	public static String intToString(int value) {
 		if (value == 0)
 			return "0";
 		
@@ -52,15 +48,13 @@ public class Problem2
 		int remainder = Math.abs(value);
 		int modulus = 0;
 			
-		for (; position < 11 && remainder > 0; position++)
-		{
+		for (; position < 11 && remainder > 0; position++) {
 			modulus = remainder % 10;
 			result[10 - position] = (char)('0' + modulus);
 			remainder /= 10;
 		}
 
-		if (value < 0)
-		{
+		if (value < 0) {
 			result[10 - position] = '-';
 			position++;
 		}
